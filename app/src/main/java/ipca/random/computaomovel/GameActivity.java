@@ -19,10 +19,25 @@ public class GameActivity extends AppCompatActivity {
         //shit goes here
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
+
         display.getSize(size);
         gameView = new GameView(this, size.x, size.y);
         setContentView(gameView);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameView.resume();
     }
 }
