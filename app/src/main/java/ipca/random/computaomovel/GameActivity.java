@@ -22,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
         gameView = new GameView(this, size.x, size.y);
         setContentView(gameView);
         */
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
 }
