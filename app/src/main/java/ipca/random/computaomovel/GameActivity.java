@@ -15,8 +15,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
-        //shit goes here
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
 
