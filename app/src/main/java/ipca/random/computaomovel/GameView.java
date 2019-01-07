@@ -20,11 +20,12 @@ public class GameView extends SurfaceView implements Runnable{
     volatile boolean playing;
 
     private Thread gameThread =  null;
-    private Bitmap background;
-
 
     private Paint paint;
     private Canvas canvas;
+    private int canvas_width;
+    private int canvas_height;
+
     private SurfaceHolder surfaceHolder;
 
     private Player player;
@@ -39,7 +40,7 @@ public class GameView extends SurfaceView implements Runnable{
         surfaceHolder = getHolder();
         paint =  new Paint();
 
-
+        player = new Player(context);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     private void update() {
-
+        player.Update(canvas_width, canvas_height);
 
     }
 
@@ -62,13 +63,16 @@ public class GameView extends SurfaceView implements Runnable{
         if(surfaceHolder.getSurface().isValid()){
 
             canvas = surfaceHolder.lockCanvas();
+canvas_width = canvas.getWidth();
+canvas_height = canvas.getHeight();
 
             canvas.drawColor(Color.WHITE);
+
+            canvas.drawBitmap(player.bitmap, player.x, player.y, paint);
+
             paint.setColor(Color.CYAN);
 
-
             surfaceHolder.unlockCanvasAndPost(canvas);
-
         }
     }
 
