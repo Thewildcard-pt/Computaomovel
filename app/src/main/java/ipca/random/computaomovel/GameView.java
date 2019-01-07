@@ -1,6 +1,8 @@
 package ipca.random.computaomovel;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,7 +20,7 @@ public class GameView extends SurfaceView implements Runnable{
     volatile boolean playing;
 
     private Thread gameThread =  null;
-
+    private Bitmap background;
 
 
     private Paint paint;
@@ -31,6 +33,8 @@ public class GameView extends SurfaceView implements Runnable{
     public GameView(Context context, int width, int height) {
         super(context);
 
+        // Set background image
+        this.setBackgroundResource(R.drawable.background);
 
         surfaceHolder = getHolder();
         paint =  new Paint();
