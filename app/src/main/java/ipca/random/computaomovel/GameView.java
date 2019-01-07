@@ -15,4 +15,13 @@ import java.util.List;
 public class GameView extends SurfaceView implements Runnable{
 
 
+
+    public GameView(Context context,int width,int height) {
+        super(context);
+    }
+
+    @Override
+    public void run() {
+
+    }
 }
