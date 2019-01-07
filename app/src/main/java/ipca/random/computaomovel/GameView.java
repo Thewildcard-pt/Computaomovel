@@ -48,10 +48,8 @@ public class GameView extends SurfaceView implements Runnable{
 
     }
 
-
-    int boomupdate = 0;
-
     private void update() {
+
 
     }
 
