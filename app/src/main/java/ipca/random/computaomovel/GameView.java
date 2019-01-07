@@ -61,8 +61,8 @@ public class GameView extends SurfaceView implements Runnable{
 
             canvas = surfaceHolder.lockCanvas();
 
-            canvas.drawColor(Color.BLACK);
-            paint.setColor(Color.WHITE);
+            canvas.drawColor(Color.WHITE);
+            paint.setColor(Color.CYAN);
 
 
             surfaceHolder.unlockCanvasAndPost(canvas);
