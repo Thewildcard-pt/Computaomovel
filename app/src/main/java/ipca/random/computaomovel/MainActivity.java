@@ -14,17 +14,12 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_start;
     Button btn_quit;
-
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Teste");
-        myRef.setValue("Hello, World!");
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
