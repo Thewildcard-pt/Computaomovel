@@ -15,10 +15,8 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
 
-        display.getSize(size);
-        gameView = new GameView(this, size.x, size.y);
+        gameView = new GameView(this);
         setContentView(gameView);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

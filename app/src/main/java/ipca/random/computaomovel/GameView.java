@@ -15,31 +15,29 @@ public class GameView extends SurfaceView implements Runnable {
 
     private Thread gameThread = null;
 
-    private Paint paint;
-
     private Canvas canvas;
+    private Paint paint;
 
     private int screen_width;
     private int screen_height;
-    int timer;
     private SurfaceHolder surfaceHolder;
 
     private Player player;
     private ObstacleSpawner obstacleSpawner;
 
-    public GameView(Context context, int width, int height) {
+    public GameView(Context context) {
 
         super(context);
 
+        paint = new Paint();
+        surfaceHolder = getHolder();
         screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
         screen_height = Resources.getSystem().getDisplayMetrics().heightPixels;
 
         // Set background image
         this.setBackgroundResource(R.drawable.background);
 
-        surfaceHolder = getHolder();
-        paint = new Paint();
-
+        // Create initial game entities
         obstacleSpawner = new ObstacleSpawner(context, screen_width, screen_height);
         player = new Player(context);
     }
@@ -57,7 +55,6 @@ public class GameView extends SurfaceView implements Runnable {
     private void update() {
         obstacleSpawner.Update();
 
-        timer++;
 
         player.Update(screen_width, screen_height);
     }
@@ -70,11 +67,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas.drawColor(Color.WHITE);
 
-            canvas.drawBitmap(player.bitmap, player.x, player.y, paint);
 
             for(Obstacle o: obstacleSpawner.obstacleList){
                 canvas.drawBitmap(o.bitmap,o.x,o.y,paint);
             }
+
+            canvas.drawBitmap(player.spriteList[player.currentSprite], player.x, player.y, paint);
 
             paint.setColor(Color.CYAN);
 
