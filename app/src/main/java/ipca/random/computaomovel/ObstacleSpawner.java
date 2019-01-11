@@ -17,7 +17,7 @@ public class ObstacleSpawner {
 
     public ObstacleSpawner(Context context, int screen_width, int screen_height) {
 
-        obstacleSprite = BitmapFactory.decodeResource(context.getResources(), R.drawable.player);
+        obstacleSprite = BitmapFactory.decodeResource(context.getResources(), R.drawable.obstacle);
 
         this.screen_width = screen_width;
         this.screen_height = screen_height;
@@ -37,6 +37,6 @@ public class ObstacleSpawner {
 
 
     public void SpawnObstacle(){
-        obstacleList.add(new Obstacle(obstacleSprite, screen_width));
+        obstacleList.add(new Obstacle(obstacleSprite, screen_width, screen_height));
     }
 }
