@@ -4,26 +4,40 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Player {
     Bitmap[] spriteList = new Bitmap[5];
     int currentSprite;
+    int lastState;
+
+    Timer stateChangeDelay = new Timer("Move cooldown");
+    Boolean stateChangeOnCooldown = false;
+
+    int screen_width;
+    int screen_height;
+
 
     int x;
     int y;
 
-    public Player(Context context){
+    public Player(Context context, int screen_width, int screen_height){
+        // Store screen size
+        this.screen_width = screen_width;
+        this.screen_height = screen_height;
+
         spriteList[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk1);
         spriteList[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk2);
-        //spriteList[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeleft);
-        //spriteList[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeright);
-        //spriteList[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_jump);
+        spriteList[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeleft);
+        spriteList[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeright);
+        spriteList[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_jump);
 
-        // Initialize the walk animator timer
-        Timer updateTimer = new Timer("Walk animation");
-        updateTimer.scheduleAtFixedRate(new TimerTask() {
+        // Create a walk animation
+        Timer walkTimer = new Timer("Walk animation");
+        walkTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if(currentSprite == 0)
                     currentSprite = 1;
@@ -33,11 +47,40 @@ public class Player {
         }, 0, 250);
     }
 
-    public void Update(int canvas_width, int canvas_height){
+    public void Update(){
+        x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
+        y = screen_height - spriteList[currentSprite].getHeight() - 50;
 
+        if(!stateChangeOnCooldown && currentSprite > 1)
+            currentSprite = 0;
 
-        x = (canvas_width / 2) - (spriteList[currentSprite].getWidth() / 2);
-        y = canvas_height - spriteList[currentSprite].getHeight() - 50;
+    }
 
+    public void processInput(int touch_x, int touch_y)
+    {
+        // Only apply input if not on cooldown
+        if(!stateChangeOnCooldown)
+        {
+            // Set to jump state on tapping the top half of the screen
+            if(touch_y < screen_height / 2)
+                currentSprite = 4;
+
+            // Set to dodge_left state on tapping the bottom left half of the screen
+            else if(touch_x < screen_width / 2)
+                currentSprite = 2;
+
+            // Set to dodge_right state on tapping the bottom right half of the screen
+            else
+                currentSprite = 3;
+
+            // Disable state changing
+            stateChangeOnCooldown = true;
+
+            // Set state changing to be enabled in 2 seconds
+            stateChangeDelay.schedule(new TimerTask() {
+                public void run() {
+                    stateChangeOnCooldown = false;
+                }}, 500);
+        }
     }
 }

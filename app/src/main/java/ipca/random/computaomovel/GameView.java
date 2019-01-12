@@ -25,6 +25,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private ObstacleSpawner obstacleSpawner;
 
+    private Boolean actionController = true;
+
     public GameView(Context context) {
 
         super(context);
@@ -39,7 +41,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         // Create initial game entities
         obstacleSpawner = new ObstacleSpawner(context, screen_width, screen_height);
-        player = new Player(context);
+        player = new Player(context, screen_width, screen_height);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class GameView extends SurfaceView implements Runnable {
         obstacleSpawner.Update();
 
 
-        player.Update(screen_width, screen_height);
+        player.Update();
     }
 
     private void draw() {
@@ -106,6 +108,19 @@ public class GameView extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                actionController = true;
+                break;
+
+            case MotionEvent.ACTION_DOWN:
+                if (actionController) {
+                    player.processInput((int)event.getX(), (int)event.getY());
+                }
+
+                actionController = false;
+                break;
+        }
 
         return true;
     }
