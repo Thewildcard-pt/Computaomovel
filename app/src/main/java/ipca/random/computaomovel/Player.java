@@ -12,7 +12,6 @@ import java.util.TimerTask;
 public class Player {
     Bitmap[] spriteList = new Bitmap[5];
     int currentSprite;
-    int lastState;
 
     Timer stateChangeDelay = new Timer("Move cooldown");
     Boolean stateChangeOnCooldown = false;
@@ -48,8 +47,29 @@ public class Player {
     }
 
     public void Update(){
-        x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
-        y = screen_height - spriteList[currentSprite].getHeight() - 50;
+        switch(currentSprite){
+            case 0:
+                x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height - spriteList[currentSprite].getHeight() - 50;
+                break;
+            case 1:
+                x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height - spriteList[currentSprite].getHeight() - 50;
+                break;
+            case 2:
+                x = (1 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height - spriteList[currentSprite].getHeight() - 50;
+                break;
+            case 3:
+                x = (3 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height - spriteList[currentSprite].getHeight() - 50;
+                break;
+            case 4:
+                x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height / 2 - spriteList[currentSprite].getHeight() - 50;
+                break;
+
+        }
 
         if(!stateChangeOnCooldown && currentSprite > 1)
             currentSprite = 0;
