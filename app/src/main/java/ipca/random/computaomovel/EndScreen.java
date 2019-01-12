@@ -1,5 +1,6 @@
 package ipca.random.computaomovel;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -17,6 +18,8 @@ public class EndScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
+        Intent intent = getIntent();
+        Score pontos = (Score) intent.getSerializableExtra("Score");
 
         //Receber a tabela de Highscores da firebase;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -30,6 +33,18 @@ public class EndScreen extends AppCompatActivity {
             id = x.child("id").toString();
             Score = Integer.parseInt(x.child("score").toString());
             Highscores.add(new Score(Score,id));
+        }
+
+        Score comp = pontos;
+        for(int i=0; i<Highscores.size();i++)
+        {
+            if(comp.value > Highscores.get(i).value)
+            {
+                Score temp;
+                temp = Highscores.get(i);
+                Highscores.get(i).equals(comp);
+                comp =  temp;
+            }
         }
     }
 }
