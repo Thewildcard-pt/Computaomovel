@@ -34,7 +34,7 @@ public class EndScreen extends AppCompatActivity {
             Score = Integer.parseInt(x.child("score").toString());
             Highscores.add(new Score(Score,id));
         }
-
+        boolean update = false;
         Score comp = pontos;
         for(int i=0; i<Highscores.size();i++)
         {
@@ -44,17 +44,21 @@ public class EndScreen extends AppCompatActivity {
                 temp = Highscores.get(i);
                 Highscores.get(i).equals(comp);
                 comp =  temp;
+                update = true;
             }
         }
 
-        DatabaseReference myRef = database.getReference("Pontuacoes");
-        DatabaseReference obj;
-        for(int i=0; i<Highscores.size();i++)
+
+        if(update)
         {
-            obj = myRef.child(Integer.toString(i));
-            obj.child("id").setValue(Highscores.get(i).id);
-            obj.child("id").setValue(Integer.toString(Highscores.get(i).value));
+            DatabaseReference myRef = database.getReference("Pontuacoes");
+            DatabaseReference obj;
+            for (int i = 0; i < Highscores.size(); i++) {
+                obj = myRef.child(Integer.toString(i));
+                obj.child("id").setValue(Highscores.get(i).id);
+                obj.child("id").setValue(Integer.toString(Highscores.get(i).value));
+            }
         }
-        
+
     }
 }
