@@ -7,7 +7,15 @@ public class Score {
 
     public Score(int score, String nome)
     {
-     value  = score;
-     id = nome;
+        id = nome;
+        value  = score;
+    }
+
+    public String GetID(){
+        return id;
+    }
+
+    public int GetValue(){
+        return  value;
     }
 }
