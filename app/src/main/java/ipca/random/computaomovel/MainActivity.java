@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference obj = myRef.child("1");
                 DatabaseReference name = obj.child("id");
                 String nome = name.toString();
-                name.setValue("IT WORKS");
+                nome = "some random";
+                name.setValue(nome);
 
                 startActivity(intent);
             }
