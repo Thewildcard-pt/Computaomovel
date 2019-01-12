@@ -10,16 +10,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Player {
+
+    // Sprite array and current sprite index int
     Bitmap[] spriteList = new Bitmap[5];
     int currentSprite;
 
+    // Timer used when applying the state change cooldown
     Timer stateChangeDelay = new Timer("Move cooldown");
     Boolean stateChangeOnCooldown = false;
 
+    // Screen sizes
     int screen_width;
     int screen_height;
 
-
+    // Player position variables
     int x;
     int y;
 
@@ -28,6 +32,7 @@ public class Player {
         this.screen_width = screen_width;
         this.screen_height = screen_height;
 
+        // Store each player sprite
         spriteList[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk1);
         spriteList[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk2);
         spriteList[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeleft);
@@ -38,6 +43,7 @@ public class Player {
         Timer walkTimer = new Timer("Walk animation");
         walkTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
+                // Swaps between the two walk sprites every 250 milliseconds, if one of them is being displayed
                 if(currentSprite == 0)
                     currentSprite = 1;
                 else if (currentSprite == 1)
@@ -47,30 +53,37 @@ public class Player {
     }
 
     public void Update(){
+
+        // Set the player sprite positions used by the different sprites
         switch(currentSprite){
+            // Walk animation sprite 1
             case 0:
                 x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
+            // Walk animation sprite 2
             case 1:
                 x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
+            // Dodge left sprite
             case 2:
                 x = (1 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
+            // Dodge right sprite
             case 3:
                 x = (3 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
+            // Jump sprite
             case 4:
                 x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height / 2 - spriteList[currentSprite].getHeight() - 50;
                 break;
-
         }
 
+        // Reset to the walking state if state change cooldown has ended and not already walking
         if(!stateChangeOnCooldown && currentSprite > 1)
             currentSprite = 0;
 
