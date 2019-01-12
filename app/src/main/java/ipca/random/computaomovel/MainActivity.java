@@ -10,10 +10,15 @@ import android.widget.Button;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn_start;
     Button btn_quit;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,GameActivity.class);
+                DatabaseReference myRef = database.getReference("Pontuacoes");
+                DatabaseReference obj = myRef.child("1");
+                DatabaseReference name = obj.child("id");
+                name.setValue("IT WORKS");
+
                 startActivity(intent);
             }
         });
