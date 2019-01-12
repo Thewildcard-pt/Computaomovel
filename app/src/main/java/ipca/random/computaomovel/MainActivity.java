@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Pontuacoes");
                 DatabaseReference obj = myRef.child("1");
                 DatabaseReference name = obj.child("id");
+                String nome = name.toString();
                 name.setValue("IT WORKS");
 
                 startActivity(intent);
