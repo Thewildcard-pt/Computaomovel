@@ -1,10 +1,15 @@
 package ipca.random.computaomovel;
 
 import android.graphics.Bitmap;
+import android.support.v4.math.MathUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Obstacle {
-    public Bitmap bitmap_base;
     public Bitmap bitmap;
+
+    List<Bitmap> wallSpriteList;
 
     int screen_width;
     int screen_height;
@@ -15,16 +20,15 @@ public class Obstacle {
 
     Boolean markForDelete = false;
 
-    public Obstacle(Bitmap bitmap, int type, int screen_width, int screen_height) {
+    public Obstacle(int type, List wallSpriteList, int screen_width, int screen_height) {
         // Store obstacle sprite and screen size
-        this.bitmap_base = bitmap;
-        this.bitmap = bitmap;
         this.type = type;
         this.screen_width = screen_width;
         this.screen_height = screen_height;
+        this.wallSpriteList = wallSpriteList;
 
         // Initialize obstacle position at the top of the track
-        y = 50;
+        y = 20;
 
         // Update scale with the current Y position
         Update();
@@ -47,24 +51,26 @@ public class Obstacle {
         switch(type)
         {
             case 1:
-                x = (screen_width / 2);
+                x = (screen_width / 2) - (bitmap.getWidth() / 2);
                 break;
             case 2:
                 x = (screen_width / 2) - (bitmap.getWidth());
                 break;
             case 3:
-                x = (screen_width / 2) - (bitmap.getWidth() / 2);
+                x = (screen_width / 2);
                 break;
         }
     }
 
     // Makes the obstacle sprite bigger as it approaches the bottom of the screen (fake 3D effect)
     public void SetScale() {
-        int relativeScale = (int)(y / 1.8f);
-        if(relativeScale < 10)
-            relativeScale = 10;
+        int i = (y*300)/screen_height;
 
-        bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale, false);
+        if(type > 1)
+            i += 300;
 
+        i = MathUtils.clamp(i, 0, 2* 300);
+
+        bitmap = wallSpriteList.get(i);
     }
 }

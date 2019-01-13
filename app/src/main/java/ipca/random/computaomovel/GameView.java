@@ -1,6 +1,7 @@
 package ipca.random.computaomovel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -62,6 +63,9 @@ public class GameView extends SurfaceView implements Runnable {
         score = obstacleSpawner.deletedCount * 100;
 
         player.Update();
+
+        if(player.CheckCollision(obstacleSpawner.obstacleList))
+            
     }
 
     private void draw() {
@@ -71,7 +75,6 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
 
             canvas.drawColor(Color.WHITE);
-
 
             for(Obstacle o: obstacleSpawner.obstacleList){
                 canvas.drawBitmap(o.bitmap,o.x,o.y,paint);

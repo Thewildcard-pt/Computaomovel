@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,9 +39,9 @@ public class Player {
         // Store each player sprite
         spriteList[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk1);
         spriteList[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_walk2);
-        spriteList[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeleft);
+        spriteList[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_jump);
         spriteList[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeright);
-        spriteList[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_jump);
+        spriteList[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_dodgeleft);
 
         // Create a walk animation
         walkTimer.scheduleAtFixedRate(new TimerTask() {
@@ -68,20 +69,20 @@ public class Player {
                 x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
-            // Dodge left sprite
+            // Jump sprite
             case 2:
-                x = (1 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
-                y = screen_height - spriteList[currentSprite].getHeight() - 50;
+                x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height / 2 - spriteList[currentSprite].getHeight() - 50;
                 break;
             // Dodge right sprite
             case 3:
                 x = (3 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
                 y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
-            // Jump sprite
+            // Dodge left sprite
             case 4:
-                x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
-                y = screen_height / 2 - spriteList[currentSprite].getHeight() - 50;
+                x = (1 * screen_width / 4) - (spriteList[currentSprite].getWidth() / 2);
+                y = screen_height - spriteList[currentSprite].getHeight() - 50;
                 break;
         }
 
@@ -98,13 +99,13 @@ public class Player {
         {
             // Set to jump state on tapping the top half of the screen
             if(touch_y < screen_height / 2)
-                currentSprite = 4;
-
-            // Set to dodge_left state on tapping the bottom left half of the screen
-            else if(touch_x < screen_width / 2)
                 currentSprite = 2;
 
-            // Set to dodge_right state on tapping the bottom right half of the screen
+            // Set to dodge_right state on tapping the bottom left half of the screen
+            else if(touch_x < screen_width / 2)
+                currentSprite = 4;
+
+            // Set to dodge_left state on tapping the bottom right half of the screen
             else
                 currentSprite = 3;
 
@@ -117,5 +118,28 @@ public class Player {
                     stateChangeOnCooldown = false;
                 }}, 500);
         }
+    }
+
+    public boolean CheckCollision(List<Obstacle> obstacleList){
+        for(Obstacle o:obstacleList) {
+            if (o.y + o.bitmap.getHeight() > screen_height - 60) {
+                switch (o.type) {
+                    case 1:
+                        if(currentSprite != 2)
+                            return true;
+                        break;
+                    case 2:
+                        if(currentSprite != 3)
+                            return true;
+                        break;
+                    case 3:
+                        if(currentSprite != 4)
+                            return true;
+                        break;
+                }
+            }
+        }
+
+        return false;
     }
 }
