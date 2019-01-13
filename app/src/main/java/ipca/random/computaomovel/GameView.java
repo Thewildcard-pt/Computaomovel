@@ -25,6 +25,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private ObstacleSpawner obstacleSpawner;
 
+    private int score;
+
     private Boolean inputAllowed = true;
 
     public GameView(Context context) {
@@ -56,6 +58,8 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
         obstacleSpawner.Update();
+
+        score = obstacleSpawner.deletedCount * 100;
 
         player.Update();
     }

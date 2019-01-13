@@ -39,7 +39,7 @@ public class Obstacle {
         SetScale();
 
         // Mark obstacle for deletion if it has disappeared past the bottom
-        if (y > screen_height + bitmap.getHeight()) {
+        if (y > screen_height - bitmap.getHeight() / 2) {
             markForDelete = true;
             return;
         }
@@ -64,17 +64,7 @@ public class Obstacle {
         if(relativeScale < 10)
             relativeScale = 10;
 
-        // Different vertical size depending on obstacle type
-        switch(type){
-            case 1:
-                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale * 2, false);
-                break;
-            case 2:
-                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale * 2, false);
-                break;
-            case 3:
-                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale, false);
-                break;
-        }
+        bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale, false);
+
     }
 }

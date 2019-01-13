@@ -22,6 +22,8 @@ public class ObstacleSpawner {
     Boolean shouldSpawnObstacle = true;
     int spawnFrequency;
 
+    public int deletedCount = 0;
+
     Random random = new Random();
 
     public ObstacleSpawner(Context context, int screen_width, int screen_height) {
@@ -47,23 +49,19 @@ public class ObstacleSpawner {
             // Disable obstacle spawning on Update()
             shouldSpawnObstacle = false;
 
-            // TO DO: FIX MYSTERIOUS MEMORY LEAK ?
-            /*
             // Set a timer to re-enable obstacle spawning
             spawnTimer.schedule(new TimerTask() {
                 public void run() {
                     shouldSpawnObstacle = true;
 
                     // Lower delay every obstacle spawn down to a set minimum
-                    if (spawnFrequency > 1000)
+                    if (spawnFrequency > 400)
                         spawnFrequency = (int)(spawnFrequency * 0.95f);
                 }
             }, spawnFrequency);
-            */
         }
 
         int deleteIndex = -1;
-
         // Update all existing obstacles
         for (Obstacle o: obstacleList)
         {
@@ -75,10 +73,11 @@ public class ObstacleSpawner {
         }
 
         // If an obstacle was marked for deletion
-        if(deleteIndex != -1)
+        if(deleteIndex != -1) {
             // Delete the obstacle
             obstacleList.remove(deleteIndex);
-
+            deletedCount++;
+        }
     }
 
     public void SpawnObstacle(){
