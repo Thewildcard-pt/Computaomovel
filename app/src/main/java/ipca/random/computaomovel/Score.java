@@ -1,6 +1,5 @@
 package ipca.random.computaomovel;
 
-
 import java.io.Serializable;
 
 public class Score implements Serializable {

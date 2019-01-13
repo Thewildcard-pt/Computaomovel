@@ -3,7 +3,6 @@ package ipca.random.computaomovel;
 import android.graphics.Bitmap;
 import android.support.v4.math.MathUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Obstacle {
