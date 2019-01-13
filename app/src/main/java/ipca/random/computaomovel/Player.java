@@ -19,6 +19,9 @@ public class Player {
     Timer stateChangeDelay = new Timer("Move cooldown");
     Boolean stateChangeOnCooldown = false;
 
+    // Timer used to create the walk animation
+    Timer walkTimer = new Timer("Walk animation");
+
     // Screen sizes
     int screen_width;
     int screen_height;
@@ -40,7 +43,6 @@ public class Player {
         spriteList[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_jump);
 
         // Create a walk animation
-        Timer walkTimer = new Timer("Walk animation");
         walkTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 // Swaps between the two walk sprites every 250 milliseconds, if one of them is being displayed

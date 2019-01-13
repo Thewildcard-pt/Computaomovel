@@ -25,7 +25,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private ObstacleSpawner obstacleSpawner;
 
-    private Boolean actionController = true;
+    private Boolean inputAllowed = true;
 
     public GameView(Context context) {
 
@@ -56,7 +56,6 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
         obstacleSpawner.Update();
-
 
         player.Update();
     }
@@ -110,15 +109,15 @@ public class GameView extends SurfaceView implements Runnable {
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
-                actionController = true;
+                inputAllowed = true;
                 break;
 
             case MotionEvent.ACTION_DOWN:
-                if (actionController) {
+                if (inputAllowed) {
                     player.processInput((int)event.getX(), (int)event.getY());
                 }
 
-                actionController = false;
+                inputAllowed = false;
                 break;
         }
 
