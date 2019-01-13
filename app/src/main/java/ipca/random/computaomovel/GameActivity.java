@@ -1,10 +1,9 @@
 package ipca.random.computaomovel;
 
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -14,9 +13,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Display display = getWindowManager().getDefaultDisplay();
-
         gameView = new GameView(this);
+        Drawable background = getResources().getDrawable(R.drawable.background_game, null);
+        gameView.setBackground(background);
         setContentView(gameView);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

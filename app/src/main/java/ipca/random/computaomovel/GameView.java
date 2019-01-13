@@ -1,7 +1,6 @@
 package ipca.random.computaomovel;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -40,7 +39,7 @@ public class GameView extends SurfaceView implements Runnable {
         screen_height = Resources.getSystem().getDisplayMetrics().heightPixels;
 
         // Set background image
-        this.setBackgroundResource(R.drawable.background);
+        this.setBackgroundResource(R.drawable.background_game);
 
         // Create initial game entities
         obstacleSpawner = new ObstacleSpawner(context, screen_width, screen_height);
@@ -77,15 +76,13 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas = surfaceHolder.lockCanvas();
 
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(Color.rgb(250, 250, 250));
 
             for(Obstacle o: obstacleSpawner.obstacleList){
                 canvas.drawBitmap(o.bitmap,o.x,o.y,paint);
             }
 
             canvas.drawBitmap(player.spriteList[player.currentSprite], player.x, player.y, paint);
-
-            paint.setColor(Color.CYAN);
 
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
