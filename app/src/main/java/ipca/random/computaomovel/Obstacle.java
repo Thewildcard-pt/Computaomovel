@@ -29,7 +29,7 @@ public class Obstacle {
         this.screen_height = screen_height;
 
         // Initialize obstacle position at the top of the track
-        y = 20;
+        y = 50;
 
         // Update scale with the current Y position
         Update();

@@ -70,7 +70,7 @@ public class Player {
             // Jump sprite
             case 2:
                 x = (screen_width / 2) - (spriteList[currentSprite].getWidth() / 2);
-                y = screen_height / 2 - spriteList[currentSprite].getHeight() - 50;
+                y = screen_height / 2 - spriteList[currentSprite].getHeight() + 300;
                 break;
             // Dodge right sprite
             case 3:

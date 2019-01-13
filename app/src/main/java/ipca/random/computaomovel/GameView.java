@@ -75,7 +75,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             canvas = surfaceHolder.lockCanvas();
 
-            canvas.drawColor(Color.rgb(250, 250, 250));
+            canvas.drawColor(Color.rgb(245, 245, 245));
+
+            paint.setARGB(255, 0, 0,0 );
+
+            paint.setTextSize(100);
+            canvas.drawText(String.valueOf(score), 50,110,paint);
 
             for(Obstacle o: obstacleSpawner.obstacleList){
                 canvas.drawBitmap(o.bitmap,o.x,o.y,paint);

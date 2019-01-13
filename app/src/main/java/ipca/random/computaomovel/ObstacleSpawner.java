@@ -63,7 +63,7 @@ public class ObstacleSpawner {
                     shouldSpawnObstacle = true;
 
                     // Lower delay every obstacle spawn down to a set minimum
-                    if (spawnFrequency > 600)   // Minimum should be bigger than the player's input cooldown
+                    if (spawnFrequency > 800)   // Minimum should be bigger than the player's input cooldown
                         spawnFrequency = (int) (spawnFrequency * 0.95f);
                 }
             }, spawnFrequency);
@@ -122,8 +122,8 @@ public class ObstacleSpawner {
             if (relativeScale < 10)
                 relativeScale = 10;
 
-            int scale_x = (int)(relativeScale * 0.6f);
-            int scale_y = (int)(relativeScale * 2f);
+            int scale_x = (int)(relativeScale * 0.5f);
+            int scale_y = (int)(relativeScale * 1.5f);
 
             wallSpriteList.add(Bitmap.createScaledBitmap(obstacleSprite_base, scale_x, scale_y, false));
 
