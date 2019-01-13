@@ -11,39 +11,70 @@ public class Obstacle {
     public int x;
     public int y;
 
-    public Obstacle(Bitmap bitmap, int screen_width, int screen_height) {
+    int type;
+
+    Boolean markForDelete = false;
+
+    public Obstacle(Bitmap bitmap, int type, int screen_width, int screen_height) {
         // Store obstacle sprite and screen size
         this.bitmap_base = bitmap;
         this.bitmap = bitmap;
+        this.type = type;
         this.screen_width = screen_width;
         this.screen_height = screen_height;
 
-        // Initialize obstacle position at the top of the track and in the middle of screen
-        x = (screen_width / 2) - (bitmap.getWidth() / 2);
-        y = 60;
+        // Initialize obstacle position at the top of the track
+        y = 50;
 
+        // Update scale with the current Y position
+        Update();
     }
 
     public void Update() {
+
         // Make obstacle go down every update (slightly faster as y increases)
-        y = y + 1 + y/20;
+        y = y + 1 + y / 20;
 
-        // Set obstacle to the top of the screen if it has reached the bottom
-        if (y > screen_height + bitmap.getHeight())
-            y = 60;
-
-        // Update scale with current Y position
+        // Update scale with the current Y position
         SetScale();
 
-        // Re-center the obstacle every update (position changes with the scaling)
-        x = (screen_width / 2) - (bitmap.getWidth() / 2);
+        // Mark obstacle for deletion if it has disappeared past the bottom
+        if (y > screen_height + bitmap.getHeight()) {
+            markForDelete = true;
+            return;
+        }
+
+        switch(type)
+        {
+            case 1:
+                x = (screen_width / 2);
+                break;
+            case 2:
+                x = (screen_width / 2) - (bitmap.getWidth());
+                break;
+            case 3:
+                x = (screen_width / 2) - (bitmap.getWidth() / 2);
+                break;
+        }
     }
 
-    // real time dynamic scale rendering
+    // Makes the obstacle sprite bigger as it approaches the bottom of the screen (fake 3D effect)
     public void SetScale() {
-        int y_t = (int)(y / 1.8f);
-        if(y_t < 10)
-            y_t = 10;
-        bitmap = Bitmap.createScaledBitmap(bitmap_base, y_t, y_t, false);
+        int relativeScale = (int)(y / 1.8f);
+        if(relativeScale < 10)
+            relativeScale = 10;
+
+        // Different vertical size depending on obstacle type
+        switch(type){
+            case 1:
+                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale * 2, false);
+                break;
+            case 2:
+                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale * 2, false);
+                break;
+            case 3:
+                bitmap = Bitmap.createScaledBitmap(bitmap_base, relativeScale, relativeScale, false);
+                break;
+        }
     }
 }
