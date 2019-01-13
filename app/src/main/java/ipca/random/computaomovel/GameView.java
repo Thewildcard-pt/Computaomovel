@@ -64,7 +64,10 @@ public class GameView extends SurfaceView implements Runnable {
 
         player.Update();
 
+
+        // TODO: THING
         if(player.CheckCollision(obstacleSpawner.obstacleList))
+            pause();
             
     }
 
