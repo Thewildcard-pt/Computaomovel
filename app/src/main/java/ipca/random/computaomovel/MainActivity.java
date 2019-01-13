@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,GameActivity.class);
+                Intent Nintent = new Intent(MainActivity.this,GameActivity.class);
                 DatabaseReference myRef = database.getReference("Pontuacoes");
                 DatabaseReference obj = myRef.child("1");
                 DatabaseReference name = obj.child("id");
@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 nome = "some random";
                 name.setValue(nome);
 
-                startActivity(intent);
+                startActivity(Nintent);
+
             }
         });
 
