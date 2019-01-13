@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public class EndScreen extends AppCompatActivity {
     List<Score> Highscores = new ArrayList<Score>();
     Button Submit;
     EditText text;
+    TextView pont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +29,11 @@ public class EndScreen extends AppCompatActivity {
 
         Submit = findViewById(R.id.btn_Submit);
         text = findViewById(R.id.Etext_Id);
+        pont = findViewById(R.id.txt_score);
 
         Intent intent = getIntent();
         final int sc = intent.getIntExtra("pontos",0);
+        pont.setText(sc);
 
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
