@@ -9,6 +9,7 @@ public class Obstacle {
     public Bitmap bitmap;
 
     List<Bitmap> wallSpriteList;
+    int smoothCount;
 
     int screen_width;
     int screen_height;
@@ -19,12 +20,13 @@ public class Obstacle {
 
     Boolean markForDelete = false;
 
-    public Obstacle(int type, List wallSpriteList, int screen_width, int screen_height) {
+    public Obstacle(int type, List wallSpriteList, int smoothCount, int screen_width, int screen_height) {
         // Store obstacle sprite and screen size
         this.type = type;
+        this.wallSpriteList = wallSpriteList;
+        this.smoothCount = smoothCount;
         this.screen_width = screen_width;
         this.screen_height = screen_height;
-        this.wallSpriteList = wallSpriteList;
 
         // Initialize obstacle position at the top of the track
         y = 20;
@@ -63,12 +65,12 @@ public class Obstacle {
 
     // Makes the obstacle sprite bigger as it approaches the bottom of the screen (fake 3D effect)
     public void SetScale() {
-        int i = (y*300)/screen_height;
+        int i = (y*smoothCount)/screen_height;
 
         if(type > 1)
-            i += 300;
+            i += smoothCount;
 
-        i = MathUtils.clamp(i, 0, 2* 300);
+        i = MathUtils.clamp(i, 0, 2* smoothCount);
 
         bitmap = wallSpriteList.get(i);
     }

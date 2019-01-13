@@ -17,6 +17,8 @@ public class ObstacleSpawner {
 
     Bitmap obstacleSprite_base;
 
+    int smoothCount;
+
     int screen_width;
     int screen_height;
 
@@ -32,6 +34,9 @@ public class ObstacleSpawner {
 
         // Set starting spawner frequency
         spawnFrequency = 3000;
+
+        // Bigger smoothCount value means more interpolated positions are created for each sprite (better accuracy)
+        smoothCount = 150;
 
         // Load the obstacle sprite
         obstacleSprite_base = BitmapFactory.decodeResource(context.getResources(), R.drawable.obstacle);
@@ -83,28 +88,25 @@ public class ObstacleSpawner {
     }
 
     public void SpawnObstacle() {
-        obstacleList.add(new Obstacle(random.nextInt(3) + 1, wallSpriteList, screen_width, screen_height));
+        obstacleList.add(new Obstacle(random.nextInt(3) + 1, wallSpriteList, smoothCount, screen_width, screen_height));
     }
 
     public void PreloadSprites() {
 
-        // Bigger smoothCount value means more interpolated positions are created for each sprite (better accuracy)
-        int smoothCount = 300;
-
-        float y_increment = (screen_height-50) / smoothCount;
+        float y_increment = (screen_height) / smoothCount;
 
         float current_y = 0;
 
         // Create the different low wall sprites
         for(int i = 0; i < smoothCount; i++) {
 
-            int relativeScale = (int) (current_y / 1.72f);
+            int relativeScale = (int) (current_y * 0.92f);
 
             if (relativeScale < 10)
                 relativeScale = 10;
 
-            int scale_x = (int)(relativeScale * 1.1f);
-            int scale_y = (int)(relativeScale * 1f);
+            int scale_x = (int)(relativeScale * 0.6f);
+            int scale_y = (int)(relativeScale * 0.4f);
 
             wallSpriteList.add(Bitmap.createScaledBitmap(obstacleSprite_base, scale_x, scale_y, false));
 
@@ -115,12 +117,12 @@ public class ObstacleSpawner {
 
         // Create the different tall wall sprites
         for(int i = 0; i < smoothCount; i++) {
-            int relativeScale = (int) (current_y / 1.7f);
+            int relativeScale = (int) (current_y * 0.9f);
 
             if (relativeScale < 10)
                 relativeScale = 10;
 
-            int scale_x = (int)(relativeScale * 0.7f);
+            int scale_x = (int)(relativeScale * 0.6f);
             int scale_y = (int)(relativeScale * 2f);
 
             wallSpriteList.add(Bitmap.createScaledBitmap(obstacleSprite_base, scale_x, scale_y, false));
