@@ -1,6 +1,7 @@
 package ipca.random.computaomovel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,6 +9,12 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Set;
 
 public class GameView extends SurfaceView implements Runnable {
 
@@ -25,13 +32,16 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private ObstacleSpawner obstacleSpawner;
 
-    private int score;
+    private Context mContext;
+
+    public int score;
 
     private Boolean inputAllowed = true;
 
     public GameView(Context context) {
 
         super(context);
+        this.mContext = context;
 
         paint = new Paint();
         surfaceHolder = getHolder();
@@ -53,7 +63,6 @@ public class GameView extends SurfaceView implements Runnable {
             draw();
             control();
         }
-
     }
 
     private void update() {
@@ -64,9 +73,19 @@ public class GameView extends SurfaceView implements Runnable {
         player.Update();
 
         // TODO: THING
-        if(player.CheckCollision(obstacleSpawner.obstacleList))
-            pause();
-            
+        if(player.CheckCollision(obstacleSpawner.obstacleList)) {
+            mContext = getContext();
+
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference tabela = database.getReference("Pontuacao");
+            tabela.push().child("pontos").setValue(score);
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.putExtra("pontos",score);
+            mContext.startActivity(intent);
+            playing = false;
+
+        }
     }
 
     private void draw() {

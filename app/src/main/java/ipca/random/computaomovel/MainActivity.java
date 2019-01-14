@@ -30,12 +30,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Nintent = new Intent(MainActivity.this,GameActivity.class);
-                DatabaseReference myRef = database.getReference("Pontuacoes");
-                DatabaseReference obj = myRef.child("1");
-                DatabaseReference name = obj.child("id");
-                String nome = name.toString();
-                nome = "some random";
-                name.setValue(nome);
 
                 startActivity(Nintent);
 
