@@ -71,10 +71,5 @@ public class EndScreen extends AppCompatActivity {
 
 
         });
-
-
-
-
-
     }
 }

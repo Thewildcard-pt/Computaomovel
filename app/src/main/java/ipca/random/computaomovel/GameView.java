@@ -9,12 +9,10 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Set;
 
 public class GameView extends SurfaceView implements Runnable {
 
@@ -72,10 +70,8 @@ public class GameView extends SurfaceView implements Runnable {
 
         player.Update();
 
-        // TODO: THING
         if(player.CheckCollision(obstacleSpawner.obstacleList)) {
             mContext = getContext();
-
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference tabela = database.getReference("Pontuacao");
