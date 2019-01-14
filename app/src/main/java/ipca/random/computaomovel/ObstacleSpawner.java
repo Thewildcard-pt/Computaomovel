@@ -36,7 +36,7 @@ public class ObstacleSpawner {
         spawnFrequency = 3000;
 
         // Bigger smoothCount value means more interpolated positions are created for each sprite (better accuracy)
-        smoothCount = 50;
+        smoothCount = 150;
 
         // Load the obstacle sprite
         obstacleSprite_base = BitmapFactory.decodeResource(context.getResources(), R.drawable.obstacle);
